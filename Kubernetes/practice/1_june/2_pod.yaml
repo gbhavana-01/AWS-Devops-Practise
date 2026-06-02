@@ -1,0 +1,16 @@
+# Bhavana@LAPTOP-E0A1LIKM MINGW64 ~/Downloads/Bhavana Work/AWS Devops/AWS-Devops_MC_B17D/Kubernetes/practice/1_june (main)
+# $ kubectl run pod2 --image tomcat --dry-run -o yaml
+# W0602 11:56:51.275545   25840 helpers.go:719] --dry-run is deprecated and can be replaced with --dry-run=client.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2
+  labels:
+    run: pod2
+  
+spec:
+  containers:
+  - name: pod2
+    image: tomcat
+    resources: {}
+

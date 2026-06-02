@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fb-pod #pod name
+  labels:
+    app: fb-app # this is the label of the pod, we can use this label to select the pod.
+    env: prod
+spec:
+  containers:
+  - name: fb-container #container name used in the pod 
+    image: tomcat
+    ports:
+    - containerPort: 8080 # tomcat server port.

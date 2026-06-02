@@ -1,0 +1,13 @@
+#5_pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: insta-pod
+  labels:
+    app: instagram-app 
+spec:
+  containers:   
+  - name: instagram-container
+    image: tomcat
+    ports:
+    - containerPort: 8080

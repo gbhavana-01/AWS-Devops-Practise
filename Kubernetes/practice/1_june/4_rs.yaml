@@ -1,0 +1,22 @@
+#4_rs.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: instagram-replicaset
+  labels:
+    app: instagram-rs # replicaset label
+spec:
+  replicas: 3
+  selector:  
+    matchLabels:
+      app: instagram-app # this is the label selector, it will select the pods with this label and create 3 replicas of those pods.
+  template:
+    metadata:
+      labels:
+        app: instagram-app # this is the label of the pod, we can use this label to select the pod.
+    spec:
+      containers:
+      - name: instagram-container
+        image: tomcat
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,17 @@
+#3_multicont_pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two-container-pod
+  labels:
+    app: two-container-app
+spec:
+  containers:
+  - name: container1
+    image: tomcat
+    ports:
+    - containerPort: 8080
+  - name: container2
+    image: busybox
+    command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 3600']
+  
