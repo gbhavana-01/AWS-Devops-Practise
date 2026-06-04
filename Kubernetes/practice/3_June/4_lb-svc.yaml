@@ -1,0 +1,18 @@
+#4_lb-svc.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fb-service
+  labels:
+    app: fb-service
+    env: prod
+spec:
+  type: LoadBalancer
+  selector:
+    app: fb-app
+    env: prod
+  ports:
+  - protocol: TCP   
+    port: 80 # This is the load balancer port, which is a external port.
+    targetPort: 8080  # This is the container port on which the application is running.

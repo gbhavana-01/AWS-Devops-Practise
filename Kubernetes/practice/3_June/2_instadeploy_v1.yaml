@@ -1,0 +1,33 @@
+#2_instadeploy_v1.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fb-deployment #name should be same in other (v2) version of deployment yaml file
+  labels:
+    app: fb-deploy
+    env: prod 
+
+spec:
+  replicas: 3 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: fb-app
+      env: prod 
+  template:
+    metadata:
+      labels:
+        app: fb-app
+        env: prod
+        version: v1
+    spec:
+      containers: 
+      - name: fb-container
+        image: dockerhub1105/practicerepo:mc_app_img
+        ports:
+        - containerPort: 8080

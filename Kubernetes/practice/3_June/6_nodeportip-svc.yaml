@@ -1,0 +1,19 @@
+#6_nodeportip_svc.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fb-service
+  labels:
+    app: fb-service
+    env: prod   
+spec:
+  type: NodePort #we use nodeport when we want to access the service outside the cluster using node's IP and nodeport.
+  selector:
+    app: fb-app
+    env: prod 
+  ports:
+  - protocol: TCP 
+    port: 80 # This is the port to access the service, which is a external port.
+    targetPort: 8080  # This is the port on which the application is running inside the container.
+    nodePort: 30080 # This is the port on which we can access the service outside the cluster using node's IP and nodeport. It should be in the range of 30000-32767.
