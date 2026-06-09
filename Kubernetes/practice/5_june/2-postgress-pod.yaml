@@ -1,0 +1,26 @@
+# 2-postgress-pod.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-pod
+  labels:
+    app: postgres-app
+
+spec:
+  containers:
+  - name: postgres-container
+    image: postgres
+
+    env:
+    - name: POSTGRES_USER
+      value: "myuser"
+
+    - name: POSTGRES_PASSWORD # not recommended to hardcode sensitive information in code
+      value: "mysecretpassword"
+
+    - name: POSTGRES_DB
+      value: "mydatabase"
+
+    ports:
+    - containerPort: 5432

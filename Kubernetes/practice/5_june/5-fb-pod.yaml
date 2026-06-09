@@ -1,0 +1,17 @@
+# 5-fb-pod.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fb-pod-complete
+  labels:
+    app: fb-app
+spec:
+  containers: 
+  - name: fb-container
+    image: nginx
+    ports:
+    - containerPort: 80
+    envFrom:
+    - configMapRef:
+        name: fb-config

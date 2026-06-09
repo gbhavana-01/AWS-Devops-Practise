@@ -1,0 +1,16 @@
+#4-fb-configmap.yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fb-config
+  labels:
+    app: fb-app
+data:
+  Course: "AWS DevOps"
+  Batch: "B17D"
+  Trainer: "Madhu Kiran"
+  Duration: "6 Months"
+  Timing: "7 PM to 10 PM"
+  Location: "Hyderabad"
+  Institute: "Mind Circuit"

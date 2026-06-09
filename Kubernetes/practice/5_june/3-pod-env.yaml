@@ -1,0 +1,27 @@
+# 3-pod-env.yaml
+--- 
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod-with-env
+  labels:
+    app: fb-app
+spec:
+  containers: 
+  - name: course-image-container
+    image: nginx
+    ports:
+    - containerPort: 80
+    env:
+    - name: Course
+      value: "AWS DevOps"
+    - name: Batch
+      value: "B17D"
+    - name: Trainer
+      value: "Madhu Kiran"
+    - name: Duration
+      value: "6 Months"
+    - name: Timing
+      value: "7 PM to 10 PM"
+    - name: Location
+      value: "Hyderabad"

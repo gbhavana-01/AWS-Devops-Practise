@@ -1,0 +1,22 @@
+# 1-pod_rr_rl.yaml
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: fb-pods
+  labels:
+    app: fb-app
+spec:
+  containers: 
+  - name: fb-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    resources: #used to specify the resource requirements for the container
+      requests: #requests are the minimum amount of resources that the container needs to run
+        memory: "64Mi" # 1Mi = 1024 KiB 64Mi = 64 * 1024 KiB = 65536 KiB. Mi  means Mebibyte.
+        cpu: "250m" # 1 CPU = 1000m 250m = 250/1000 CPU = 0.25 CPU
+      limits: #limits are the maximum amount of resources that the container can use
+        memory: "216Mi"
+        cpu: "500m"
+      
