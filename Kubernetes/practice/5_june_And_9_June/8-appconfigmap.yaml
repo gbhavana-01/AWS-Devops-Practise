@@ -1,0 +1,12 @@
+#8-appconfigmap.yamla
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  App_Name: "My Food Truck Application"
+  App_Version: "1.0.0"  
+  App_Description: "This is a Food Truck application configuration Data"
+  App_Environment: "Production"
+      

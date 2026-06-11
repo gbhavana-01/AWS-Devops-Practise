@@ -1,0 +1,32 @@
+#9-backendDeploy.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy-pod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+      - name: backend-deploy-container
+        image: nginx
+        ports:
+        - containerPort: 80
+
+        env:
+        - name: BackendApplication
+          value: "This is Backend Application"
+
+        envFrom:
+        - configMapRef:
+            name: app-config
+
+        - secretRef:
+            name: fb-secret
