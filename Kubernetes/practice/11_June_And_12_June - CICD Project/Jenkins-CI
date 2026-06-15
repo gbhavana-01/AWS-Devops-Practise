@@ -1,0 +1,103 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven_3.9.16'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'checkout code from git'
+                git branch: 'main', 
+                    url: 'https://github.com/gbhavana-01/mindcircuit17d.git' 
+            }
+        }
+
+        stage('Static code analysis - SonarQube scan') {
+             steps {
+                echo 'Scan the code - Static code analysis'
+                sh 'ls -ltr'
+
+                sh '''mvn sonar:sonar \
+                    -Dsonar.host.url=http://13.222.226.123:9000 \
+                    -Dsonar.token=squ_f3eced36d6d089505a4696090a8b5db86b859f0b \
+                '''
+
+            }
+            
+        }
+
+
+        stage('Build the artifact') {
+             steps {
+                echo 'Build the artifact'
+                sh 'mvn clean package' 
+            }
+            
+        }
+
+
+        stage('Docker Image Build') {
+             steps {
+                echo 'Build the docker image'
+                sh 'docker build -t dockerhub1105/practicerepo: ${BUILD_NUMBER} -f Dockerfile .'
+            }
+            
+        }
+
+        stage('Image Scan - Trivy') {
+             steps {
+                echo 'Scan the docker image - Trivy'
+                sh 'trivy image --severity HIGH dockerhub1105/practicerepo:${BUILD_NUMBER}'
+            }
+           
+        }
+
+
+        stage('Push the docker image to DockerHub') {
+             steps {
+                echo 'Push the docker image to DockerHub'
+
+                withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhubvar')]) {
+                    // some block
+                    sh 'docker login -u dockerhub1105 -p ${dockerhubvar}'
+                    sh 'docker push dockerhub1105/practicerepo:${BUILD_NUMBER}'
+                    echo 'docker image pushed to dockerhub successfully'
+                }
+
+                
+            }    
+        }
+
+        stage('updateGit repo deployment file with image') {
+
+            environment {
+                GIT_REPOSITORY = 'mindcircuit17d'
+                GIT_USERNAME = 'gbhavana-01'
+            }
+            withCredentials([string(credentialsId: 'githubtoken', variable: 'githubvar')]) {
+                    sh '''
+                    git config --global user.email "guntibhavana01@gmail.com"
+                    git config --global user.name "gbhavana-01"
+   
+                    echo 'update the deployment file with new image and build number'
+                                        
+                    sed -i 's|image:.*|image: dockerhub1105/practicerepo:${BUILD_NUMBER}|g' deploymentfiles/deploy.yaml
+
+
+
+                    git add deploymentfiles/deploy.yaml
+                    git commit -m "Updated the deployment file with new image and build number ${BUILD_NUMBER}"
+                    git push https://${githubvar}@github.com/${GIT_USERNAME}/${GIT_REPOSITORY}.git Head:main
+
+                    '''
+                        
+                }                 
+            
+        }
+        
+    }
+
+
+}
