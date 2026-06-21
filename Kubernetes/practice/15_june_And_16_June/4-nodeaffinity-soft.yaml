@@ -1,0 +1,49 @@
+# 4-nodeaffinity-soft.yaml
+# purpose: to create a pod with soft node affinity rules
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2-required-and-preferred-nodeaffinity
+
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - prod
+
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-east-1c
+
+      - weight: 5
+        preference:
+          matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-east-1a
+
+      - weight: 2
+        preference:
+          matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-east-1d
+
+  containers:
+  - name: pod-nginx
+    image: nginx
+    ports:
+    - containerPort: 80

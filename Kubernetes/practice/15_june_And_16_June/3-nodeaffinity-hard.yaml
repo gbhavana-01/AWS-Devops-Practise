@@ -1,0 +1,25 @@
+# 3-nodeaffinity.mal
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1-required-nodeaffinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - prod
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-east-1c 
+
+
+  containers:
+    - name: nginx
+      image: nginx

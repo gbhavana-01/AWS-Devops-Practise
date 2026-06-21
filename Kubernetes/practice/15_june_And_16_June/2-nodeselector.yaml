@@ -1,0 +1,14 @@
+#2-nodeselector.yaml
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod3-nodeselector
+spec:
+  nodeSelector:
+    env: prod
+  containers:   
+  - name: pod-nginx
+    image: nginx
+    ports:
+    - containerPort: 80

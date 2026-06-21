@@ -1,0 +1,14 @@
+#1-nodename.yaml
+# purpose: to create a pod and run that pod on a specific node
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod6
+spec:
+  nodeName: ip-192-168-19-161.ec2.internal
+  containers:
+  - name: pod-nginx-container
+    image: nginx
+    ports:
+    - containerPort: 80

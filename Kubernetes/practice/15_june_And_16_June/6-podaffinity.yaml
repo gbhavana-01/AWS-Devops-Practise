@@ -1,0 +1,25 @@
+#6-podaffinity.yaml
+#Schedule frontend-pod on the same node where a pod with label app=backend is already running.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend-pod
+
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - backend
+        topologyKey: kubernetes.io/hostname
+
+  containers:
+  - name: nginx-container
+    image: nginx
+    ports:
+    - containerPort: 80

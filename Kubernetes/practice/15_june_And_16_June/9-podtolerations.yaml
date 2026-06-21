@@ -1,0 +1,15 @@
+#9-podtolerations.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-pod2
+spec:
+  tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "database"
+    effect: "NoSchedule"
+  containers:
+    - name: mysql-database
+      image: nginx

@@ -1,0 +1,14 @@
+#5-backendpod.yaml
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: backend-pod
+  labels:
+    app: backend
+spec:
+  containers:
+  - name: pod-nginx
+    image: nginx
+    ports:
+    - containerPort: 80

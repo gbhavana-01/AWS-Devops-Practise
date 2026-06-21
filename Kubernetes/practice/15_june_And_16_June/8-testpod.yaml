@@ -1,0 +1,12 @@
+#8-testpod.yaml
+---
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: testpodfortaint
+spec:
+  containers:
+  - name: pod-nginx-container
+    image: nginx
+    ports:
+    - containerPort: 80
