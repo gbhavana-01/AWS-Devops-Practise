@@ -1,0 +1,15 @@
+#
+---
+apiVersion: v1
+kind:  PersistentVolumeClaim
+metadata:
+  name: fb-pvc
+spec:
+  storageClassName: "" # An empty string means don’t use any default StorageClass.
+  volumeName: fb-pv 
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi 
+

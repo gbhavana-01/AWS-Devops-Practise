@@ -1,0 +1,29 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::459532536509:role/eksctl-rbaciamcluster-nodegroup-b1-NodeInstanceRole-AjDNGvT81NJK
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::459532536509:user/madhu
+      username: madhu
+      groups:
+        - system:authenticated
+
+    - userarn: arn:aws:iam::459532536509:user/kiran
+      username: kiran
+      groups:
+        - system:authenticated
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-06-23T12:13:52Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "1273"
+  uid: 4a955140-fd2d-4eaa-bc2d-72f61118b2a6

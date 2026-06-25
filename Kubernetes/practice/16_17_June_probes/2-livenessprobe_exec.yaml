@@ -1,0 +1,28 @@
+#2-livenessprobe_exec.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-pod-exec
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /usr/share/nginx/html/iiiindex.html
+      initialDelaySeconds: 5    # Wait 5s after container starts before checking
+      periodSeconds: 5        # Run the check every 10 seconds
+      failureThreshold: 2       # Restart container after 3 failed checks
+
+
+
+#kubectl exec -it liveness-pod -- bash
+#cat /usr/share/nginx/html/index.html
+
+##   $?  would return 0 if the file is present, and 1 if the file is not present.

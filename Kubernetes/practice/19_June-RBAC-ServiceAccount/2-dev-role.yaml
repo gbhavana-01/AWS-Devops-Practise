@@ -1,0 +1,12 @@
+#2-dev-role.yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dev-role-podreader
+  namespace: dev
+
+rules:
+- apiGroups: [""]   # "" indicates the core API group
+  resources: ["pods"] #pod belongs empty core API group
+  verbs: ["get", "watch", "list"]

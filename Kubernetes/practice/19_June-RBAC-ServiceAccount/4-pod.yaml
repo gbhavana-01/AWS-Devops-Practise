@@ -1,0 +1,13 @@
+#4-pod.yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-ns-pod-reader
+  namespace: dev
+spec:
+  serviceAccountName: dev-sa #here we are specifing service account
+  containers:
+    - name: test
+      image: bitnami/kubectl:latest
+      command: ["sleep", "3600"]
